@@ -83,38 +83,18 @@ body {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   background: none;
   border: none;
+  padding: 0;
   cursor: pointer;
-  text-align: left;
-  font-family: inherit;
 }
 
-.brand-mark {
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-}
-
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.brand-sub {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-strong);
-  letter-spacing: -0.01em;
-}
-
-.brand-main {
-  font-size: 1.45rem;
-  font-weight: 800;
-  color: var(--brand-primary);
-  letter-spacing: -0.03em;
+.brand-logo {
+  height: 38px;
+  width: auto;
+  max-width: 190px;
+  object-fit: contain;
+  display: block;
 }
 
 .icon-btn {
