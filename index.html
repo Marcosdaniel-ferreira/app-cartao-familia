@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Cartão Nossa Família — Mais cuidado, menos custo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- Cabeçalho fixo do App -->
+      <header class="app-header">
+        <button class="brand" id="btn-logo-home" aria-label="Ir para o início">
+          <svg
+            class="brand-mark"
+            viewBox="0 0 40 40"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M20 3L27.5 12.5L37 20L27.5 27.5L20 37L12.5 27.5L3 20L12.5 12.5L20 3Z"
+              fill="url(#brandGrad)"
+            />
+            <path
+              d="M20 11L24.5 15.5L29 20L24.5 24.5L20 29L15.5 24.5L11 20L15.5 15.5L20 11Z"
+              fill="#FFFFFF"
+            />
+            <defs>
+              <linearGradient
+                id="brandGrad"
+                x1="3"
+                y1="3"
+                x2="37"
+                y2="37"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#00AAFF" />
+                <stop offset="1" stop-color="#003BF9" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="brand-text">
+            <span class="brand-sub">Cartão nossa</span>
+            <span class="brand-main">família</span>
+          </div>
+        </button>
+
+        <button
+          class="icon-btn"
+          id="btn-notifications"
+          aria-label="Notificações"
+        >
+          <span id="icon-bell-slot"></span>
+          <span class="notif-dot"></span>
+        </button>
+      </header>
+
+      <!-- Conteúdo rolável das telas -->
+      <main class="app-main">
+        <!-- ================= TELA 1: INÍCIO ================= -->
+        <section id="view-home" class="view active">
+          <div class="hero-block">
+            <p class="hero-greeting">Olá, bem-vindo</p>
+            <h1 class="hero-title">
+              Mais cuidado.<br />
+              Menos
+              <span class="highlight-word">
+                custo.
+                <svg
+                  class="highlight-underline"
+                  viewBox="0 0 130 12"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 9C36 3.5 92 2.5 127 5.5"
+                    stroke="#003BF9"
+                    stroke-width="3.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </span>
+            </h1>
+            <p class="hero-subtitle">
+              Encontre o cuidado que você precisa e veja quanto economiza com o
+              cartão.
+            </p>
+
+            <form id="home-search-form" class="search-field">
+              <span class="search-icon" id="icon-home-search"></span>
+              <input
+                type="search"
+                id="home-search-input"
+                placeholder="Qual cuidado você procura?"
+                autocomplete="off"
+              />
+            </form>
+          </div>
+
+          <div class="divider-line"></div>
+
+          <!-- Categorias (4 cards horizontais) -->
+          <div class="section-row">
+            <h2 class="section-title">Categorias</h2>
+            <button class="section-link" id="btn-see-all-categories">
+              Ver todas <span id="icon-chevron-cat"></span>
+            </button>
+          </div>
+
+          <div class="home-categories-grid" id="home-categories-grid">
+            <!-- Renderizado via JS -->
+          </div>
+
+          <!-- Card Azul de Exemplo de Economia -->
+          <div id="home-featured-card">
+            <!-- Renderizado via JS -->
+          </div>
+
+          <!-- Lista rápida de mais economias -->
+          <div class="section-row" style="margin-top: 24px">
+            <h2 class="section-title">Destaques em economia</h2>
+            <button class="section-link" id="btn-see-all-services">
+              Explorar <span id="icon-chevron-serv"></span>
+            </button>
+          </div>
+
+          <div class="service-list" id="home-top-list">
+            <!-- Renderizado via JS -->
+          </div>
+        </section>
+
+        <!-- ================= TELA 2: CATEGORIAS ================= -->
+        <section id="view-categories" class="view">
+          <div class="page-head">
+            <h1 class="page-title">Categorias</h1>
+            <p class="page-subtitle">
+              Escolha o tipo de atendimento para comparar valores.
+            </p>
+          </div>
+          <div class="categories-full-list" id="categories-full-list">
+            <!-- Renderizado via JS -->
+          </div>
+        </section>
+
+        <!-- ================= TELA 3: EXPLORAR / LISTAGEM ================= -->
+        <section id="view-explore" class="view">
+          <div class="page-head">
+            <h1 class="page-title" id="explore-title">Explorar serviços</h1>
+            <p class="page-subtitle">
+              Compare os preços particulares com o valor no cartão.
+            </p>
+          </div>
+
+          <div class="explore-controls">
+            <div class="search-field compact">
+              <span class="search-icon" id="icon-explore-search"></span>
+              <input
+                type="search"
+                id="explore-search-input"
+                placeholder="Buscar consulta, exame ou parceiro..."
+                autocomplete="off"
+              />
+            </div>
+
+            <select
+              id="explore-sort-select"
+              class="sort-select"
+              aria-label="Ordenar por"
+            >
+              <option value="desconto-desc">Maior % OFF</option>
+              <option value="economia-desc">Maior economia R$</option>
+              <option value="preco-asc">Menor valor</option>
+              <option value="nome-asc">A - Z</option>
+            </select>
+          </div>
+
+          <div class="chips-scroll" id="explore-chips">
+            <!-- Renderizado via JS -->
+          </div>
+
+          <p class="results-meta" id="explore-count"></p>
+
+          <div class="service-list" id="explore-results">
+            <!-- Renderizado via JS -->
+          </div>
+        </section>
+
+        <!-- ================= TELA 4: DETALHES DO SERVIÇO ================= -->
+        <section id="view-detail" class="view">
+          <button class="back-btn" id="btn-detail-back">
+            <span id="icon-back-arrow"></span>
+            <span>Voltar</span>
+          </button>
+
+          <div id="detail-container">
+            <!-- Renderizado via JS -->
+          </div>
+        </section>
+
+        <!-- ================= TELA 5: COMO FUNCIONA ================= -->
+        <section id="view-how" class="view">
+          <div class="page-head">
+            <h1 class="page-title">Como funciona</h1>
+            <p class="page-subtitle">
+              Simples, direto e transparente para você e sua família.
+            </p>
+          </div>
+
+          <div class="steps-list" id="how-steps-list">
+            <!-- Renderizado via JS -->
+          </div>
+        </section>
+      </main>
+
+      <!-- Barra de navegação inferior fixa (Tab Bar) -->
+      <nav class="bottom-nav" aria-label="Menu inferior">
+        <button class="tab-btn active" data-tab="home">
+          <span class="tab-icon" id="tab-icon-home"></span>
+          <span>Início</span>
+        </button>
+        <button class="tab-btn" data-tab="categories">
+          <span class="tab-icon" id="tab-icon-categories"></span>
+          <span>Categorias</span>
+        </button>
+        <button class="tab-btn" data-tab="explore">
+          <span class="tab-icon" id="tab-icon-explore"></span>
+          <span>Explorar</span>
+        </button>
+        <button class="tab-btn" data-tab="how">
+          <span class="tab-icon" id="tab-icon-how"></span>
+          <span>Como funciona</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Bottom Sheet / Modal de Confirmação -->
+    <div class="sheet-backdrop" id="sheet-backdrop" aria-hidden="true">
+      <div
+        class="bottom-sheet"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="sheet-title"
+      >
+        <div class="sheet-handle"></div>
+        <h3 id="sheet-title"></h3>
+        <p id="sheet-body"></p>
+        <div class="sheet-actions" id="sheet-actions"></div>
+      </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
