@@ -80,19 +80,27 @@ body {
   justify-content: space-between;
 }
 
+.app-header {
+  height: 64px;
+  padding: 0 20px;
+}
+
 .brand {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  height: 100%;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
 }
 
+.brand img,
 .brand-logo {
-  height: 38px;
-  width: auto;
-  max-width: 190px;
+  height: 36px !important;
+  max-height: 36px !important;
+  width: auto !important;
+  max-width: 170px !important;
   object-fit: contain;
   display: block;
 }
