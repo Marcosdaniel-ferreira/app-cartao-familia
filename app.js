@@ -94,6 +94,27 @@ function abrirDetalhes(serviceId) {
 // ================= COMPONENTES DE RENDERIZAÇÃO =================
 
 function criarCardServicoHTML(servico) {
+  // Se for parceiro com desconto percentual (sem preço fixo)
+  if (servico.resumoDesconto) {
+    return `
+      <article class="service-card" data-service-id="${servico.id}" role="button" tabindex="0">
+        <div class="service-card-head">
+          <div>
+            <h3 class="service-card-title">${servico.nome}</h3>
+            <p class="service-card-sub">${servico.parceiro} • ${servico.especialidade}</p>
+          </div>
+          <span class="service-card-chevron">${ICONS.chevronRight}</span>
+        </div>
+
+        <div class="savings-bar">
+          <span>Clique aqui para ver seus descontos</span>
+          <span class="savings-bar-pct">${servico.resumoDesconto}</span>
+        </div>
+      </article>
+    `;
+  }
+
+  // Padrão normal (com preço particular e com cartão)
   const { economia, percentual } = calcularDesconto(
     servico.precoParticular,
     servico.precoCartao,
@@ -276,14 +297,51 @@ function renderizarListaExplorar() {
 }
 
 function renderizarDetalhes(item) {
-  const { economia, percentual } = calcularDesconto(
-    item.precoParticular,
-    item.precoCartao,
-  );
-  const proporcaoPaga = Math.max(
-    10,
-    Math.round((item.precoCartao / item.precoParticular) * 100),
-  );
+  const isPercentual = Boolean(item.resumoDesconto);
+  const { economia, percentual } = isPercentual
+    ? { economia: 0, percentual: 0 }
+    : calcularDesconto(item.precoParticular, item.precoCartao);
+
+  const proporcaoPaga = isPercentual
+    ? 0
+    : Math.max(10, Math.round((item.precoCartao / item.precoParticular) * 100));
+
+  const blocoValores = isPercentual
+    ? `
+      <div class="detail-compare-card">
+        <div class="detail-savings-banner">
+          <span>Benefício exclusivo com o Cartão Nossa Família</span>
+          <strong>${item.resumoDesconto}</strong>
+        </div>
+      </div>
+    `
+    : `
+      <div class="detail-compare-card">
+        <div class="detail-price-grid">
+          <div class="price-item">
+            <span class="p-label">Valor particular</span>
+            <span class="p-old">${formatarMoeda(item.precoParticular)}</span>
+          </div>
+          <span class="price-arrow-muted">${ICONS.arrowDownRight}</span>
+          <div class="price-item" style="text-align: right;">
+            <span class="p-label">Valor com o cartão</span>
+            <span class="p-card" style="font-size: 1.45rem;">${formatarMoeda(item.precoCartao)}</span>
+          </div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-track">
+            <div class="progress-fill" style="width: ${proporcaoPaga}%"></div>
+          </div>
+          <span class="progress-badge">-${percentual}% OFF</span>
+        </div>
+
+        <div class="detail-savings-banner">
+          <span>Sua economia real neste atendimento</span>
+          <strong>${formatarMoeda(economia)}</strong>
+        </div>
+      </div>
+    `;
 
   document.getElementById("detail-container").innerHTML = `
     <span class="detail-tag">${getCategoriaNome(item.categoria)}</span>
@@ -297,52 +355,35 @@ function renderizarDetalhes(item) {
       <p>${item.preparo}</p>
     </div>
 
-    <div class="detail-compare-card">
-      <div class="detail-price-grid">
-        <div class="price-item">
-          <span class="p-label">Valor particular</span>
-          <span class="p-old">${formatarMoeda(item.precoParticular)}</span>
-        </div>
-        <span class="price-arrow-muted">${ICONS.arrowDownRight}</span>
-        <div class="price-item" style="text-align: right;">
-          <span class="p-label">Valor com o cartão</span>
-          <span class="p-card" style="font-size: 1.45rem;">${formatarMoeda(item.precoCartao)}</span>
-        </div>
-      </div>
-
-      <div class="progress-row">
-        <div class="progress-track">
-          <div class="progress-fill" style="width: ${proporcaoPaga}%"></div>
-        </div>
-        <span class="progress-badge">-${percentual}% OFF</span>
-      </div>
-
-      <div class="detail-savings-banner">
-        <span>Sua economia real neste atendimento</span>
-        <strong>${formatarMoeda(economia)}</strong>
-      </div>
-    </div>
+    ${blocoValores}
 
     <button class="btn-primary-cta" id="btn-agendar-detalhe">
-      Agendar com desconto
+      ${isPercentual ? "Falar com atendimento" : "Agendar com desconto"}
     </button>
   `;
 
   document
     .getElementById("btn-agendar-detalhe")
     .addEventListener("click", () => {
+      const resumoMsg = isPercentual
+        ? `${item.nome} (${item.resumoDesconto}). Apresente seu Cartão Nossa Família ativo para garantir o benefício.`
+        : `${item.nome} (${item.parceiro}) por ${formatarMoeda(item.precoCartao)} — economia de ${formatarMoeda(economia)} (${percentual}% OFF). Informe seu CPF no agendamento para garantir o valor.`;
+
       abrirSheet(
-        "Agendar atendimento",
-        `${item.nome} (${item.parceiro}) por ${formatarMoeda(item.precoCartao)} — economia de ${formatarMoeda(economia)} (${percentual}% OFF). Informe seu CPF no agendamento para garantir o valor.`,
+        isPercentual ? "Usar benefício" : "Agendar atendimento",
+        resumoMsg,
         [
           {
             label: "Confirmar via WhatsApp",
             primary: true,
             onClick: () => {
-              const msg = encodeURIComponent(
-                `Olá! Sou cliente do Cartão Nossa Família e gostaria de agendar: ${item.nome} (${formatarMoeda(item.precoCartao)}).`,
+              const textoZap = isPercentual
+                ? `Olá! Sou cliente do Cartão Nossa Família e gostaria de informações sobre o benefício em: ${item.nome} (${item.resumoDesconto}).`
+                : `Olá! Sou cliente do Cartão Nossa Família e gostaria de agendar: ${item.nome} (${formatarMoeda(item.precoCartao)}).`;
+              window.open(
+                `https://wa.me/5535999840544?text=${encodeURIComponent(textoZap)}`,
+                "_blank",
               );
-              window.open(`https://wa.me/5535999840544?text=${msg}`, "_blank");
               fecharSheet();
             },
           },
@@ -351,7 +392,6 @@ function renderizarDetalhes(item) {
       );
     });
 }
-
 function renderizarComoFunciona() {
   document.getElementById("how-steps-list").innerHTML =
     COMO_FUNCIONA_PASSOS.map(
