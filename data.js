@@ -647,3 +647,25 @@ const COMO_FUNCIONA_PASSOS = [
       "Sem guias complexas ou surpresas: você sabe exatamente quanto vai pagar e quanto economiza antes mesmo de agendar.",
   },
 ];
+
+// ==================== AVISOS E NOVIDADES DO SINO ====================
+const AVISOS = [
+  {
+    titulo: "Novos parceiros locais disponíveis",
+    data: "Novembro 2026",
+    texto:
+      "Agora você conta com descontos na Academia Lilian Maraca, Laboratório Biocenter, SPA Lilis e Farmácia Nova Granada.",
+  },
+  {
+    titulo: "Como ativar seu desconto na recepção",
+    data: "Importante",
+    texto:
+      "Sempre informe o CPF do titular ou apresente seu Cartão Nossa Família ativo antes de realizar o atendimento.",
+  },
+  {
+    titulo: "Otorrinolaringologia com Rodrigo Sposito Issa",
+    data: "Novo",
+    texto:
+      "Sempre informe o CPF do titular ou apresente seu Cartão Nossa Família ativo antes de realizar o atendimento.",
+  },
+];

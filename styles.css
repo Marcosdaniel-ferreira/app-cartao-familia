@@ -992,3 +992,49 @@ svg.ico-sm {
   width: 17px;
   height: 17px;
 }
+
+/* ================= LISTA DE AVISOS NO SINO ================= */
+.avisos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 55vh;
+  overflow-y: auto;
+  margin-bottom: 18px;
+}
+
+.aviso-item {
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.aviso-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.aviso-item-head strong {
+  font-size: 0.92rem;
+  color: var(--text-strong);
+}
+
+.aviso-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--brand-primary);
+  background: #ebf3ff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.aviso-item p {
+  font-size: 0.84rem;
+  color: var(--text-body);
+  margin: 0;
+}

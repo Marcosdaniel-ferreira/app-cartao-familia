@@ -443,13 +443,34 @@ function registrarEventos() {
     .addEventListener("click", () => irParaTela("home"));
 
   document.getElementById("btn-notifications").addEventListener("click", () => {
-    abrirSheet(
-      "Avisos do Cartão",
-      "Todos os valores exibidos no aplicativo já refletem o desconto exclusivo para titulares e dependentes ativos.",
-      [{ label: "Entendi", primary: true, onClick: fecharSheet }],
-    );
-  });
+    // Esconde a bolinha indicadora depois que o usuário abre os avisos
+    const dot = document.querySelector(".notif-dot");
+    if (dot) dot.style.display = "none";
 
+    const listaHTML =
+      typeof AVISOS !== "undefined" && AVISOS.length > 0
+        ? `<div class="avisos-list">
+          ${AVISOS.map(
+            (aviso) => `
+            <div class="aviso-item">
+              <div class="aviso-item-head">
+                <strong>${aviso.titulo}</strong>
+                ${aviso.data ? `<span class="aviso-tag">${aviso.data}</span>` : ""}
+              </div>
+              <p>${aviso.texto}</p>
+            </div>
+          `,
+          ).join("")}
+        </div>`
+        : "<p>Nenhum aviso no momento.</p>";
+
+    abrirSheet("Avisos e Novidades", "", [
+      { label: "Entendi", primary: true, onClick: fecharSheet },
+    ]);
+
+    // Injeta a lista formatada dentro do corpo do Bottom Sheet
+    document.getElementById("sheet-body").innerHTML = listaHTML;
+  });
   // Busca na Home
   document
     .getElementById("home-search-form")
